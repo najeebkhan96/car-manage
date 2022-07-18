@@ -181,14 +181,17 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.5.0.1254</version>
 			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<!-- latest version (2.20.1) does not work well with JUnit5 -->
-				<version>2.19.1</version>
-				<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
-				</configuration>
-				<dependencies>
+	
+			  <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>${skip.unit-tests}</skipTests>
+          <includes>
+            <include>**/*Tests.java</include>
+          </includes>
+        </configuration>
+        <dependencies>
 					<dependency>
 						<groupId>org.junit.platform</groupId>
 						<artifactId>junit-platform-surefire-provider</artifactId>
@@ -200,7 +203,26 @@
 						<version>5.6.2</version>
 					</dependency>
 				</dependencies>
-			</plugin>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <configuration>
+              <skipTests>${skip.integration-tests}</skipTests>
+              <includes>
+                <include>**/*ApplicationTests.java</include>
+                <include>**/*IT.java</include>
+              </includes>
+            </configuration>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
 		</plugins>
 	</build>
