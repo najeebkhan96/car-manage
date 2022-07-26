@@ -5,7 +5,7 @@ on:
     - README.md
   pull_request:
     paths-ignore:
-    - README.md
+    - README.md 
 jobs:
   build:
     runs-on: ubuntu-latest
